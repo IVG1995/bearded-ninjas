@@ -34,8 +34,8 @@ public class Statistics {
 	
 	public static Table createXVT(Table data){
 		double[][] result = new double[data.getTable().length][data.getTable()[0].length];
-		int[] rowSums = new int[data.getTable()[0].length];
-		int[] colSums = new int[data.getTable().length];
+		double[] rowSums = new double[data.getTable()[0].length];
+		double[] colSums = new double[data.getTable().length];
 		for(int i = 0 ; i < data.getTable().length ; i++){
 			colSums[i] = 0;
 		}
@@ -56,9 +56,11 @@ public class Statistics {
 		Table result1 = new Table(data.getName(), result);
 		return result1;
 	}
-	/*This method returns true if the chi^2 test is relevant to the variance */
+	
+	//This method returns true if the chi^2 test is relevant to the variance 
 	public static boolean chiRelevance(Table xvm){
-		double entriesCrit = (double)xvm.getTable().length * xvm.getTable()[0].length / 5; //the 20% critical entry value for the partic matrix
+		//the 20% critical entry value for the partic matrix
+		double entriesCrit = (double)xvm.getTable().length * xvm.getTable()[0].length / 5; 
 		double critValues = 0 ;
 		for(int i = 0 ; i < xvm.getTable().length ; i++){
 			for(int j = 0 ; j < xvm.getTable()[0].length ; j++){
