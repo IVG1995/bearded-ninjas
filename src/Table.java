@@ -28,7 +28,7 @@ public class Table {
 		// check for enough information
 		if(taken < degFree)throw new RuntimeException("Not enough data for construction!");		
 		
-		// Does it work??
+		//TODO Does ETH WORKETH
 	}
 	
 	//single-argument overloaded constructors, getters and setters
