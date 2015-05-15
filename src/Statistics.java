@@ -92,7 +92,7 @@ public class Statistics {
 	public static void main(String[] args){
 		double[] a = new double[]{8,8,10,8,8,9,6.5,4};
 		double[] b = new double[]{1,4,1,5,10,2,6,12};
-		Table data = new Table(new double[][]{new double[]{12,18},new double[]{17,13}});
+		Table data = new Table("lel",new double[][]{new double[]{12,18},new double[]{17,13}});
 		System.out.printf("Mean of A: %.3f"+"\n"+"Standard Deviation of A: %.3f"+"\n"+"Mean of B: %.3f"+"\n"+
 						  "Standard Deviation of B: %.3f"+"\n"+"Coefficient Of Correlation: %.3f"+"\nChi Squared value"+
 						  " to three decimals is :%.3f"+"\nChi^2 test is viable for this variance: %s"+"\n"

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 
 public class Table {
 	//private fields: subject to change
@@ -5,43 +7,74 @@ public class Table {
 	private String name;
 	
 	
-	//Main constructor used for overloading
+	//New Table
+	public Table(String name, int rows, int cols){
+		this.name = name;
+		this.table = new double[rows][cols];
+		Arrays.fill(this.table, -1);
+	}
+	
+	//Table communication within program
 	public Table(String name, double[][] table){
 		this.name = name;
 		this.table = table;
 	}
 	
-	//Constructor to be made by IGGeorgiev, to contain as arguments the least amount
-	//of information, needed for the creation of a table for observed categorical data.
-	//Degree of freedom check already done - delete and make your own if you want.
-	public Table(String name, int totalVar, int dimRow, int dimCol, Table oldTable){
+	//Automatic Table Filling/ Table Initialisation Method with given totals
+	public void Init(Table oldTable, double[] colTotals, double[] rowTotals){
 		//TODO
 		
 		int degFree = oldTable.degreeOfFreedom();
 		int taken = 0;
 		for(double[] arr : oldTable.getTable()){
 			for(double d : arr){
-				if(d != 0) taken++;
+				if(d != -1) taken++;
 			}
 		}
 		
 		// check for enough information
-		if(taken < degFree)throw new RuntimeException("Not enough data for construction!");		
-		
-		//TODO Does ETH WORKETH
+		if(taken >= degFree && oldTable.isWellFormed() && getTableRows() == rowTotals.length && getTableCols() == colTotals.length){
+			//Work in Progress
+			while(!isFilled()){
+				for(int rcount = 0; rcount < getTableRows(); rcount++){
+					int usedspace = 0;
+					  for(int ccount = 0; ccount < getTableCols(); ccount++){
+						  if(table[rcount][ccount] != -1) usedspace++;
+					  }
+					  if(usedspace == getTableCols() - 1){
+						  
+					  }
+				}
+				for(int rcount = 0; rcount < getTableRows(); rcount++){
+					int usedspace = 0;
+					  for(int ccount = 0; ccount < getTableCols(); ccount++){
+						  if(table[rcount][ccount] != -1) usedspace++;
+					  }
+					  if(usedspace == getTableCols() - 1){
+						  
+					  }
+				}
+				 /* for(double[] row : table){
+					  int usedspace = 0;
+					  for(double d : row){
+						  if(d != -1) usedspace++;
+					  }
+					  if(usedspace == getTableCols() - 1)
+				  }*/
+			}
+		}
 	}
 	
-	//single-argument overloaded constructors, getters and setters
-	public Table(double[][] table){
-		this(null, table);
-	}
-	
-	public Table(String name){
-		this(name, null);
-	}
+	//Note: Remake Init with "double totalVariables" for ease of access and/or filling colTotals or rowTotals
 	
 	public double[][] getTable() {
 		return table;
+	}
+	public int getTableRows(){
+		return table.length;
+	}
+	public int getTableCols(){
+		return table[0].length;
 	}
 	public void setTable(double[][] table) {
 		this.table = table;
@@ -54,7 +87,7 @@ public class Table {
 	}
 	
 	
-	//Check to see if the table is N x N by setting the length of the first array to an int
+	//Check to see if the table is M x N by setting the length of the first array to an int
 	//and then comparing it with every other array's length.
 	public boolean isWellFormed(){
 		boolean result = true;
@@ -65,6 +98,16 @@ public class Table {
 		return result;
 	}
 	
+	//Check if table is filled
+	//POSSIBLY REDUNDANT METHOD!
+	public boolean isFilled(){
+		for(double[] row : table){
+			for(double d : row){
+				if(d == -1) return false;
+			}
+		}
+		return true;
+	}
 	
 	//Calculates the degree of freedom of the table (M x N) using the formula
 	//degree = (M-1) * (N-1), unless M = 1 or N = 1 
@@ -98,7 +141,7 @@ public class Table {
 	
 	//Main method for testing:
 	public static void main(String[] args){
-		Table table = new Table("table1", new double[3][3]);
+		Table table = new Table("table1", 3, 3);
 		System.out.print(table.toString());
 	}
 }
