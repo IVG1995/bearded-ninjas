@@ -11,10 +11,12 @@ public class Table {
 	public Table(String name, int rows, int cols){
 		this.name = name;
 		this.table = new double[rows][cols];
-		Arrays.fill(this.table, -1);
+		for(double[] d : this.table){
+			Arrays.fill(d, -1);
+		}
 	}
 	
-	//Table communication within program
+	//Table communication within program and testing
 	public Table(String name, double[][] table){
 		this.name = name;
 		this.table = table;
@@ -34,7 +36,8 @@ public class Table {
 		
 		// check for enough information
 		if(taken >= degFree && oldTable.isWellFormed() && getTableRows() == rowTotals.length && getTableCols() == colTotals.length){
-			//Work in Progress
+			
+			//Heavy Shit
 			while(!isFilled()){
 				for(int rcount = 0; rcount < getTableRows(); rcount++){
 					int usedspace = 0;
@@ -42,16 +45,30 @@ public class Table {
 						  if(table[rcount][ccount] != -1) usedspace++;
 					  }
 					  if(usedspace == getTableCols() - 1){
-						  
+						  double filler = rowTotals[rcount];
+						  for(int ccount = 0; ccount < getTableCols(); ccount++){
+							  filler -= table[rcount][ccount];
+						  }
+						  filler += 1;
+						  for(int ccount = 0; ccount < getTableCols(); ccount++){
+							  if(table[rcount][ccount] == -1) table[rcount][ccount] = filler;
+						  }
 					  }
 				}
-				for(int rcount = 0; rcount < getTableRows(); rcount++){
+				for(int ccount = 0; ccount < getTableCols(); ccount++){
 					int usedspace = 0;
-					  for(int ccount = 0; ccount < getTableCols(); ccount++){
+					  for(int rcount = 0; rcount < getTableRows(); rcount++){
 						  if(table[rcount][ccount] != -1) usedspace++;
 					  }
-					  if(usedspace == getTableCols() - 1){
-						  
+					  if(usedspace == getTableRows() - 1){
+						  double filler = colTotals[ccount];
+						  for(int rcount = 0; rcount < getTableRows(); rcount++){
+							  filler -= table[rcount][ccount];
+						  }
+						  filler += 1;
+						  for(int rcount = 0; rcount < getTableCols(); rcount++){
+							  if(table[rcount][ccount] == -1) table[rcount][ccount] = filler;
+						  }
 					  }
 				}
 				 /* for(double[] row : table){
@@ -141,7 +158,9 @@ public class Table {
 	
 	//Main method for testing:
 	public static void main(String[] args){
-		Table table = new Table("table1", 3, 3);
+		Table table = new Table("Table", 3, 3);
+		Table userTable = new Table("UserTable", new double[][]{new double[]{5,7,-1},new double[]{-1,6,-1}, new double[]{-1,-1,2}});
+		table.Init(userTable, new double[]{17,17,17}, new double[]{17,17,17});
 		System.out.print(table.toString());
 	}
 }
