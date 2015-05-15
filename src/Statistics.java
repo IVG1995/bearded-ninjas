@@ -34,8 +34,8 @@ public class Statistics {
 	
 	public static Table createXVT(Table data){
 		double[][] result = new double[data.getTable().length][data.getTable()[0].length];
-		int[] rowSums = new int[data.getTable()[0].length];
-		int[] colSums = new int[data.getTable().length];
+		double[] rowSums = new double[data.getTable()[0].length];
+		double[] colSums = new double[data.getTable().length];
 		for(int i = 0 ; i < data.getTable().length ; i++){
 			colSums[i] = 0;
 		}
